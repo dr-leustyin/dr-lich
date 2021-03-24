@@ -7304,7 +7304,7 @@ module Games
                         if $_SERVERSTRING_ =~ /<popStream id="combat" \/>/
                            combat = false unless $_SERVERSTRING_.index("<pushStream id=\"combat\" />") > $_SERVERSTRING_.index("<popStream id=\"combat\" />")
                         end
-                        if combat and ($_SERVERSTRING_.start_with?("<pushString") or $_SERVERSTRING_.start_with?("<prompt") or $_SERVERSTRING_.start_with?("<component"))
+                        if combat and ($_SERVERSTRING_.start_with?("<pushStream") or $_SERVERSTRING_.start_with?("<prompt") or $_SERVERSTRING_.start_with?("<component"))
                            $_SERVERSTRING_ = "<popStream id=\"combat\" />" + $_SERVERSTRING_
                            combat=false
                         end
