@@ -7283,11 +7283,11 @@ module Games
                      begin
                         $cmd_prefix = String.new if $_SERVERSTRING_ =~ /^\034GSw/
 
-                        ## Fix duplicate pushStrings
-                        $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><pushStream id=\"combat\" />","<pushStream id=\"combat\" />")
-
                         ## Clear out superfluous tags
                         $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><popStream id=\"combat\" />","")
+
+                        ## Fix duplicate pushStrings
+                        $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><pushStream id=\"combat\" />","<pushStream id=\"combat\" />")
 
                         # The Rift, Scatter is broken...
                         if $_SERVERSTRING_ =~ /<compDef id='room text'><\/compDef>/
