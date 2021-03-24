@@ -7282,6 +7282,10 @@ module Games
                      @@_buffer.update($_SERVERSTRING_) if TESTING
                      begin
                         $cmd_prefix = String.new if $_SERVERSTRING_ =~ /^\034GSw/
+
+                        ## Fix duplicat pushStrings
+                        $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><pushStream id=\"combat\" />","<pushStream id=\"combat\" />")
+
                         # The Rift, Scatter is broken...
                         if $_SERVERSTRING_ =~ /<compDef id='room text'><\/compDef>/
                            $_SERVERSTRING_.sub!(/(.*)\s\s<compDef id='room text'><\/compDef>/)  { "<compDef id='room desc'>#{$1}</compDef>" }
