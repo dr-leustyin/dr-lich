@@ -7287,7 +7287,9 @@ module Games
                         $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><popStream id=\"combat\" />","")
 
                         ## Fix duplicate pushStrings
-                        $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><pushStream id=\"combat\" />","<pushStream id=\"combat\" />")
+                        while $_SERVERSTRING_.include?("<pushStream id=\"combat\" /><pushStream id=\"combat\" />")
+                          $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><pushStream id=\"combat\" />","<pushStream id=\"combat\" />")
+                        end
 
                         # The Rift, Scatter is broken...
                         if $_SERVERSTRING_ =~ /<compDef id='room text'><\/compDef>/
