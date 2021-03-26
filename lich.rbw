@@ -7275,6 +7275,10 @@ module Games
 
             @@thread = Thread.new {
                begin
+                  # Matches two <pushStream> tags for same window that appear together.
+                  duplicate_push_stream_regex = /(<pushStream id="[\w-]+"\s*\/>)\s*\1/
+                  # Matches a <pushStream> and <popStrem> pair that have no content inside them.
+                  empty_push_pop_stream_regex = /<pushStream id="([\w-]+)"\s*\/>\s*<popStream id="\1"\s*\/>/
                   atmospherics = false
                   combat = false
                   while $_SERVERSTRING_ = @@socket.gets
@@ -7284,11 +7288,11 @@ module Games
                         $cmd_prefix = String.new if $_SERVERSTRING_ =~ /^\034GSw/
 
                         ## Clear out superfluous tags
-                        $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><popStream id=\"combat\" />","")
+                        $_SERVERSTRING_ = $_SERVERSTRING_.gsub(empty_push_pop_stream_regex, '')
 
                         ## Fix duplicate pushStrings
-                        while $_SERVERSTRING_.include?("<pushStream id=\"combat\" /><pushStream id=\"combat\" />")
-                          $_SERVERSTRING_ = $_SERVERSTRING_.gsub("<pushStream id=\"combat\" /><pushStream id=\"combat\" />","<pushStream id=\"combat\" />")
+                        while $_SERVERSTRING_ =~ duplicate_push_stream_regex
+                          $_SERVERSTRING_ = $_SERVERSTRING_.gsub(duplicate_push_stream_regex, '\1')
                         end
 
                         # The Rift, Scatter is broken...
